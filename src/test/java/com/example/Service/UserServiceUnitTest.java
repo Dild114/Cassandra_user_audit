@@ -6,6 +6,7 @@ import app.entity.UserAudit;
 import app.service.UserAuditService;
 import com.datastax.oss.driver.api.core.cql.Row;
 import com.github.dockerjava.api.exception.NotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -25,6 +26,7 @@ import java.util.UUID;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
+@Slf4j
 @SpringBootTest(classes = Application.class)
 @Testcontainers
 public class UserServiceUnitTest {
@@ -52,7 +54,7 @@ public class UserServiceUnitTest {
     if (!cassandraContainer.isRunning()) {
       cassandraContainer.start();
     }
-    System.out.println("Cassandra port: " + cassandraContainer.getMappedPort(9042));
+    log.info("Cassandra port: " + cassandraContainer.getMappedPort(9042));
   }
 
 
@@ -65,8 +67,8 @@ public class UserServiceUnitTest {
     Assertions.assertNotNull(user.getId());
     Row row = userAudit.get(0);
     assertEquals(userAudit.size(), 1);
-    System.out.println(row.getColumnDefinitions());
-    System.out.println(row.getColumnDefinitions());
+    log.info(row.getColumnDefinitions().toString());
+    log.info(row.getColumnDefinitions().toString());
     if (row.getColumnDefinitions().contains("event_details")) {
       assertEquals(row.getString("event_details"), "test");
     } else {
