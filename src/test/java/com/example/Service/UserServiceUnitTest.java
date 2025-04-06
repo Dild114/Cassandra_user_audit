@@ -1,7 +1,7 @@
 package com.example.Service;
 
 import app.Application;
-import app.Event_type;
+import app.EventType;
 import app.entity.UserAudit;
 import app.service.UserAuditService;
 import com.datastax.oss.driver.api.core.cql.Row;
@@ -58,7 +58,7 @@ public class UserServiceUnitTest {
 
   @Test
   public void testSaveUser() {
-    UserAudit user = new UserAudit(UUID.randomUUID(), Instant.now(), Event_type.CREATE, "test");
+    UserAudit user = new UserAudit(UUID.randomUUID(), Instant.now(), EventType.CREATE, "test");
     userAuditService.saveAudit(user);
 
     List<Row> userAudit = userAuditService.findById(user.getId());

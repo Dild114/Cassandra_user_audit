@@ -17,8 +17,8 @@ public class CassandraConfig {
   @Bean
   public CqlSession cqlSession(CqlSessionBuilder sessionBuilder) {
     InetSocketAddress address = InetSocketAddress.createUnresolved("127.0.0.1", 9042);
-    sessionBuilder = sessionBuilder.addContactPoint(address).withLocalDatacenter("datacenter1"); ;
-    sessionBuilder.withKeyspace((CqlIdentifier) null);
+    sessionBuilder = sessionBuilder.addContactPoint(address).withLocalDatacenter("datacenter1");
+    sessionBuilder = sessionBuilder.withKeyspace((CqlIdentifier) null);
 
     CqlSession session = sessionBuilder.build();
 
@@ -28,19 +28,20 @@ public class CassandraConfig {
         .build();
     session.execute(statement);
 
-    session.execute("""
-            CREATE TABLE IF NOT EXISTS my_keyspace.user_audit (
-                user_id UUID,
-                event_time TIMESTAMP,
-                event_type TEXT,
-                event_details TEXT,
-                PRIMARY KEY ((user_id), event_time)
-            ) WITH CLUSTERING ORDER BY (event_time DESC)
-               AND default_time_to_live = 31536000;
-            """);
+    session.execute("USE my_keyspace");
 
-    return sessionBuilder
-        .withKeyspace("my_keyspace")
-        .build();
+    session.execute("""
+      CREATE TABLE IF NOT EXISTS user_audit (
+          user_id UUID,
+          event_time TIMESTAMP,
+          event_type TEXT,
+          event_details TEXT,
+          PRIMARY KEY ((user_id), event_time)
+      ) WITH CLUSTERING ORDER BY (event_time DESC)
+         AND default_time_to_live = 31536000;
+      """);
+
+    return session;
   }
+
 }

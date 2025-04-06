@@ -25,9 +25,9 @@ public class UserAuditService {
   public void saveAudit(UserAudit userAudit) {
     BoundStatement boundStatement = userAuditStatementManager.getInsertStatement().bind(
         userAudit.getId(),
-        userAudit.getEvent_time(),
-        userAudit.getEvent_type().name(),
-        userAudit.getEvent_details()
+        userAudit.getEventTime(),
+        userAudit.getEventType().name(),
+        userAudit.getEventDetails()
     );
     session.execute(boundStatement);
   }

@@ -1,6 +1,6 @@
 package app;
 
-public enum Event_type {
+public enum EventType {
   CREATE,
   DELETE,
   UPDATE,
