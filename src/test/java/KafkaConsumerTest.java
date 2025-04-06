@@ -11,6 +11,9 @@ import org.testcontainers.containers.KafkaContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
+
+import java.time.Duration;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest(classes = Application.class)
@@ -18,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class KafkaConsumerTest {
 
   @Container
-  public static KafkaContainer kafka = new KafkaContainer(DockerImageName.parse("confluentinc/cp-kafka:7.2.1"));
+  public static KafkaContainer kafka = new KafkaContainer(DockerImageName.parse("confluentinc/cp-kafka:7.2.1")).withStartupTimeout(Duration.ofSeconds(60));
 
   @DynamicPropertySource
   static void kafkaProperties(DynamicPropertyRegistry registry) {
