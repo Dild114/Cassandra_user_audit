@@ -1,0 +1,9 @@
+spring:
+  kafka:
+    bootstrap-servers: localhost:29093
+    consumer:
+      group-id: audit
+      enable-auto-commit: true
+  cassandra:
+    schema-action: create_if_not_exists
+    local-datacenter: datacenter1

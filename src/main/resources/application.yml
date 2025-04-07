@@ -1,0 +1,7 @@
+spring:
+  kafka:
+    bootstrap-servers: localhost:29093
+    consumer:
+      group-id: audit
+      enable-auto-commit: true
+
