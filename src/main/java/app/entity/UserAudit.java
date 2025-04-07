@@ -23,7 +23,7 @@ public class UserAudit {
   @PrimaryKeyColumn(name = "user_id", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
   private UUID id;
 
-  @Column(value = "event_time")
+  @PrimaryKeyColumn(name = "event_time", ordinal = 1, type = PrimaryKeyType.CLUSTERED)
   private Instant eventTime;
 
   @Column(value = "event_type")
